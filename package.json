@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/mkuzmik/messenger-bot/issues"
   },
-  "homepage": "https://github.com/mkuzmik/messenger-bot#readme"
+  "homepage": "https://github.com/mkuzmik/messenger-bot#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.81.0"
+  }
 }
