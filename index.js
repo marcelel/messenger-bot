@@ -100,21 +100,26 @@ function sendGenericMessage(sender) {
 }
 
 // api endpoint
-app.post('/webhook/', function (req, res) {
+  app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
-	    let event = req.body.entry[0].messaging[i]
-	    let sender = event.sender.id
-	    if (event.message && event.message.text) {
-		    let text = event.message.text
-		    if (text === 'Generic') {
-			    sendGenericMessage(sender)
-		    	continue
-		    }
-		    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-	    }
+      let event = req.body.entry[0].messaging[i]
+      let sender = event.sender.id
+      if (event.message && event.message.text) {
+  	    let text = event.message.text
+  	    if (text === 'Generic') {
+  		    sendGenericMessage(sender)
+  		    continue
+  	    }
+  	    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+      }
+      if (event.postback) {
+  	    let text = JSON.stringify(event.postback)
+  	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+  	    continue
+      }
     }
     res.sendStatus(200)
-})
+  })
 
 const token = "EAACZA55PYf7wBAELSlmZAaDN2Yey3YLSHDhu1uYkWNGZBQHa9WXKRDkupZAayei7GWKsUvWZA7R8ZCDNwR1xJYxyHc8r9DEJGslnVp124ikZAZC0nm6josP8ocJIZAXnMozZA5oeY9c7KXFeTF4QSjQakEEZAqC1t8xFFVE8HqhDZBb0iAZDZD"
